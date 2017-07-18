@@ -6,7 +6,7 @@ from ..abstract import EnvironmentBase
 class Entity:
 
     def __init__(self, coords, color=1):
-        self.coords = coords
+        self.coords = coords  # type: np.ndarray
         self.color = color
 
     def move(self, vector):
@@ -19,8 +19,8 @@ class Entity:
 class GetOut(EnvironmentBase):
 
     def __init__(self, size):
-        self.exit = None
-        self.player = None
+        self.exit = None  # type: Entity
+        self.player = None  # type: Entity
         self.size = np.array(size)
         self.canvas = np.zeros(size)
         self.actions = [(-1, -1), (-1, 0), (-1, 1),
@@ -31,8 +31,9 @@ class GetOut(EnvironmentBase):
     def neurons_required(self):
         return tuple(self.size), len(self.actions)
 
-    def escaping(self, player: Entity):
-        return np.any(player.coords < 0) or np.any(player.coords >= self.size-1)
+    def escaping(self):
+        return np.any(self.player.coords < 0) or \
+               np.any(self.player.coords > self.size-1)
 
     def draw(self):
         self.canvas = np.zeros(self.size)
@@ -56,16 +57,18 @@ class GetOut(EnvironmentBase):
     def step(self, action):
         self.steps += 1
         self.player.move(self.actions[action])
-        self.draw()
         reward = 0.
         done = False
-        if self.escaping(self.player):
-            reward = -1.
+        esc = self.escaping()
+        if esc:
+            reward = 0.
             done = True
         if self.player.touches(self.exit):
-            reward = -1.
+            reward = +1.
             done = True
         if self.steps > np.prod(self.size) * 2:
-            reward = -1.
+            reward = 0.
             done = True
+        if not esc:
+            self.draw()
         return self.canvas, reward, done
