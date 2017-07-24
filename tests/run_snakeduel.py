@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from brainforge import Network
+from brainforge import BackpropNetwork as Network
 from brainforge.layers import DenseLayer, Flatten
 from brainforge.reinforcement import DQN
 
@@ -36,10 +36,9 @@ def simulation(game):
             print(f"\rStep: {step}", end="")
             plt.pause(0.1)
         print(f" Accumulating! Steps taken: {step}, {'died' if reward < 0 else 'alive'}")
-        agent.accumulate(reward)
+        agent.accumulate(canvas, reward)
         if episode % 10 == 0:
             print("Updating!")
-            agent.update()
         episode += 1
 
 if __name__ == '__main__':
