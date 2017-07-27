@@ -10,3 +10,8 @@ class EnvironmentBase(ABC):
     @abstractmethod
     def reset(self):
         raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def neurons_required(self):
+        raise NotImplementedError

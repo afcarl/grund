@@ -28,6 +28,7 @@ class GetOut(EnvironmentBase):
                         (1, -1), (1, 0), (1, 1)]
         self.steps = 0
 
+    @property
     def neurons_required(self):
         return tuple(self.size), len(self.actions)
 
@@ -61,7 +62,7 @@ class GetOut(EnvironmentBase):
         done = False
         esc = self.escaping()
         if esc:
-            reward = 0.
+            reward = -1.
             done = True
         if self.player.touches(self.exit):
             reward = +1.

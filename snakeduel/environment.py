@@ -10,6 +10,7 @@ class SnakeDuel(EnvironmentBase):
         self.size = np.array(size)
         self.canvas = np.zeros(size, dtype=int)
         self.snakes = []
+        self.actions = (0, 1, 2, 3)
 
     def escaping(self, snake: Snake):
         return np.any(snake.coords < 0) or np.any(snake.coords >= self.size)
@@ -38,3 +39,7 @@ class SnakeDuel(EnvironmentBase):
         self.snakes = [Snake(coords1, 1)]
         list(map(self.draw, self.snakes))
         return self.canvas
+
+    @property
+    def neurons_required(self):
+        return self.size, len(self.actions)
