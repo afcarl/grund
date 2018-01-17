@@ -1,4 +1,4 @@
-import numpy as np
+from ..util.movement import vectors
 
 
 class Snake:
@@ -8,11 +8,6 @@ class Snake:
         self.color = color
         self.body = []
         self.direction = 1
-        self.vector = {1: np.array([1, 0]),
-                       2: np.array([0, 1]),
-                       3: np.array([-1, 0]),
-                       4: np.array([0, -1]),
-                       0: np.array([0, 0])}
         self.opposite = {1: 3, 3: 1, 2: 4, 4: 2, 0: None}
 
     def move(self, direction):
@@ -23,5 +18,9 @@ class Snake:
         else:
             self.direction = direction
         self.body.append(tuple(self.coords))
-        newcoords = self.coords + self.vector[direction]
+        newcoords = self.coords + vectors[direction]
         self.coords = newcoords
+
+    @property
+    def suicide(self):
+        return tuple(self.coords) in self.body

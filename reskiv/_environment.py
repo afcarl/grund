@@ -2,7 +2,7 @@ from ._ball import *
 from ._util import (
     calc_meand, downsample
 )
-from ..abstract import EnvironmentBase
+from util.abstract import EnvironmentBase
 
 BLUE = (0, 0, 200)
 DARK_GREY = (50, 50, 50)

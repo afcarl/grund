@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..abstract import EnvironmentBase
+from util.abstract import EnvironmentBase
 from .classes import Snake
 
 
@@ -15,16 +15,13 @@ class SnakeDuel(EnvironmentBase):
     def escaping(self, snake: Snake):
         return np.any(snake.coords < 0) or np.any(snake.coords >= self.size)
 
-    def suicide(self, snake: Snake):
-        return tuple(snake.coords) in snake.body
-
     def draw(self, snake):
         self.canvas[tuple(snake.coords)] = snake.color
 
     def step(self, action):
         s = self.snakes[0]  # type: Snake
         s.move(action)
-        if self.escaping(s) or self.suicide(s):
+        if self.escaping(s) or s.suicide:
             return self.canvas, -1., 1
         self.draw(s)
         return self.canvas, 0., 0

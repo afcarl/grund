@@ -1,17 +1,11 @@
-from abc import ABC, abstractmethod
+class EnvironmentBase:
 
-
-class EnvironmentBase(ABC):
-
-    @abstractmethod
     def step(self, action):
         raise NotImplementedError
 
-    @abstractmethod
     def reset(self):
         raise NotImplementedError
 
     @property
-    @abstractmethod
     def neurons_required(self):
         raise NotImplementedError

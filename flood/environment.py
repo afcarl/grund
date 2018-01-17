@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..abstract import EnvironmentBase
+from util.abstract import EnvironmentBase
 
 
 class Flood(EnvironmentBase):
